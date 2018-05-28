@@ -7,7 +7,6 @@ const ObjectID = require('mongodb').ObjectID;
 const connection = (closure) => {
     return MongoClient.connect('mongodb://' + process.env.db_user + ':' + process.env.db_pass + '@' + process.env.db_url + '/' + process.env.db_name + '?' + process.env.db_role, (err, db) => {
         if (err) return console.log(err);
-
         closure(db);
     });
 };
@@ -35,6 +34,28 @@ router.get('/users', (req, res) => {
             .then((users) => {
                 response.data = users;
                 res.json(response);
+            })
+            .catch((err) => {
+                sendError(err, res);
+            });
+    });
+});
+
+// Add user
+router.get('/adduser', (req, res) => {
+    connection((db) => {
+        db.collection('users')
+            .insert({"name":"John Doe"}).then(() => {
+                db.collection('users')
+                    .find()
+                    .toArray()
+                    .then((users) => {
+                        response.data = users;
+                        res.json(response);
+                    })
+                    .catch((err) => {
+                        sendError(err, res);
+                    });
             })
             .catch((err) => {
                 sendError(err, res);
