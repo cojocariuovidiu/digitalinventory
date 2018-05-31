@@ -3,6 +3,8 @@ const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
+console.log('mongodb://' + process.env.db_user + ':' + process.env.db_pass + '@' + process.env.db_url + '/' + process.env.db_name + '?' + process.env.db_role);
+
 // Connect
 const connection = (closure) => {
     return MongoClient.connect('mongodb://' + process.env.db_user + ':' + process.env.db_pass + '@' + process.env.db_url + '/' + process.env.db_name + '?' + process.env.db_role, (err, db) => {

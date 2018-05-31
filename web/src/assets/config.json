@@ -1,0 +1,4 @@
+{
+    "nongoUrl": "/api/mongo/users",
+    "stitchUrl": "/api/stitch/users"
+}
